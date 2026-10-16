@@ -243,6 +243,18 @@ Ruan ❤️</div>
 
     // Música hospedada na pasta musicas do GitHub.
     const musica = document.getElementById("musica");
+
+musica.load();
+
+musica.addEventListener("canplay", () => {
+  statusMusica.textContent = "Música pronta para tocar ❤️";
+});
+
+musica.addEventListener("error", () => {
+  statusMusica.textContent =
+    "Erro ao carregar a música. Verifique o caminho do arquivo.";
+});
+    
     const botaoMusica = document.getElementById("botaoMusica");
     const statusMusica = document.getElementById("statusMusica");
 
