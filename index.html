@@ -156,8 +156,7 @@
       id="musica"
       src="musicas/te-vivo.mp3"
       loop
-      preload="auto"
-      playsinline>
+      preload="auto">
     </audio>
 
     <button id="botaoMusica" type="button">
@@ -169,7 +168,7 @@
     </button>
 
     <p id="statusMusica" style="font-size: 14px; margin-top: 10px;">
-      Toque em qualquer lugar da página ou no botão para ouvir nossa música ❤️
+      Clique no botão acima para ouvir nossa música ❤️
     </p>
   </section>
 
@@ -253,65 +252,21 @@ Ruan ❤️</div>
     const botaoParar = document.getElementById("botaoParar");
     const statusMusica = document.getElementById("statusMusica");
 
-    let musicaIniciada = false;
-
-    async function tocarMusica() {
-      statusMusica.textContent = "Tentando iniciar a música...";
-
-      try {
-        await musica.play();
-        musicaIniciada = true;
+    botaoMusica.addEventListener("click", () => {
+      musica.play().then(() => {
         botaoMusica.textContent = "🎵 Música tocando";
         statusMusica.textContent = "Tocando nossa música ❤️";
-      } catch (erro) {
-        console.error("Erro ao tocar a música:", erro);
-        statusMusica.textContent =
-          "Não foi possível iniciar. Verifique se o arquivo existe e o caminho está correto.";
-      }
-    }
+      }).catch((erro) => {
+        console.error("Erro ao tocar:", erro);
+        statusMusica.textContent = "Erro: Verifique se o arquivo 'musicas/te-vivo.mp3' está na pasta correta.";
+      });
+    });
 
-    function pararMusica() {
+    botaoParar.addEventListener("click", () => {
       musica.pause();
       musica.currentTime = 0;
-      musicaIniciada = false;
       botaoMusica.textContent = "🎵 Tocar nossa música";
       statusMusica.textContent = "Música pausada.";
-    }
-
-    botaoMusica.addEventListener("click", tocarMusica);
-    botaoParar.addEventListener("click", pararMusica);
-
-    function iniciarNoPrimeiroToque() {
-      if (!musicaIniciada) {
-        tocarMusica();
-      }
-
-      document.removeEventListener("click", iniciarNoPrimeiroToque);
-      document.removeEventListener("touchstart", iniciarNoPrimeiroToque);
-    }
-
-    document.addEventListener("click", iniciarNoPrimeiroToque);
-    document.addEventListener("touchstart", iniciarNoPrimeiroToque, {
-      passive: true
-    });
-
-    musica.addEventListener("playing", () => {
-      musicaIniciada = true;
-      botaoMusica.textContent = "🎵 Música tocando";
-      statusMusica.textContent = "Tocando nossa música ❤️";
-    });
-
-    musica.addEventListener("pause", () => {
-      if (musica.currentTime > 0 && musica.ended === false) {
-        botaoMusica.textContent = "🎵 Tocar nossa música";
-      }
-    });
-
-    musica.addEventListener("error", (e) => {
-      musicaIniciada = false;
-      console.error("Erro no elemento audio:", e);
-      statusMusica.textContent =
-        "Erro 404: O arquivo 'musicas/te-vivo.mp3' não foi encontrado no servidor.";
     });
 
     musica.addEventListener("ended", () => {
