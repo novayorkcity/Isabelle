@@ -152,12 +152,15 @@
     <h2>Uma música para nós 🎵</h2>
     <p>Uma música especial para nós dois.</p>
 
+    <!-- Usando controles nativos como alternativa para garantir reprodução -->
     <audio
       id="musica"
       src="musicas/te-vivo.mp3"
       loop
-      preload="auto">
+      controls>
     </audio>
+
+    <br><br>
 
     <button id="botaoMusica" type="button">
       🎵 Tocar nossa música
@@ -168,7 +171,7 @@
     </button>
 
     <p id="statusMusica" style="font-size: 14px; margin-top: 10px;">
-      Clique no botão acima para ouvir nossa música ❤️
+      Se o botão falhar, clique no play do player nativo acima ❤️
     </p>
   </section>
 
@@ -258,7 +261,7 @@ Ruan ❤️</div>
         statusMusica.textContent = "Tocando nossa música ❤️";
       }).catch((erro) => {
         console.error("Erro ao tocar:", erro);
-        statusMusica.textContent = "Erro: Verifique se o arquivo 'musicas/te-vivo.mp3' está na pasta correta.";
+        statusMusica.textContent = "O navegador bloqueou. Tente usar o botão 'Play' direto no player acima.";
       });
     });
 
