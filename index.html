@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -141,10 +142,10 @@
     <br>
 
     <div class="galeria">
-     <img src="fotos/foto-1.jpg" alt="Nossa lembrança 1">
-     <img src="fotos/foto-2.jpg" alt="Nossa lembrança 2">
-     <img src="fotos/foto-3.jpg" alt="Nossa lembrança 3">
-     <img src="fotos/foto-4.jpg" alt="Nossa lembrança 4">
+      <img src="fotos/foto-1.jpg" alt="Nossa lembrança 1">
+      <img src="fotos/foto-2.jpg" alt="Nossa lembrança 2">
+      <img src="fotos/foto-3.jpg" alt="Nossa lembrança 3">
+      <img src="fotos/foto-4.jpg" alt="Nossa lembrança 4">
     </div>
   </section>
 
@@ -152,19 +153,25 @@
     <h2>Uma música para nós 🎵</h2>
     <p>Uma música especial para nós dois.</p>
 
-    <audio id="musica" loop>
-  <source src="musicas/te-vivo.mp3" type="audio/mpeg">
+    <audio
+      id="musica"
+      src="musicas/te-vivo.mp3"
+      loop
+      preload="auto"
+      playsinline>
     </audio>
-    
-    <button id="botaoMusica" onclick="tocarMusica()">
+
+    <button id="botaoMusica" type="button">
       🎵 Tocar nossa música
     </button>
 
-    <button onclick="pararMusica()">
+    <button id="botaoParar" type="button">
       ⏸ Parar música
     </button>
 
-    <p id="statusMusica" style="font-size: 14px; margin-top: 10px;"></p>
+    <p id="statusMusica" style="font-size: 14px; margin-top: 10px;">
+      Toque em qualquer lugar da página ou no botão para ouvir nossa música ❤️
+    </p>
   </section>
 
   <section>
@@ -204,7 +211,7 @@ Ruan ❤️</div>
       Obrigado por fazer parte da minha vida, Isabelle. ❤️
     </p>
 
-    <button onclick="mostrarSurpresa()">
+    <button type="button" onclick="mostrarSurpresa()">
       💝 Abrir minha surpresa
     </button>
   </section>
@@ -212,79 +219,112 @@ Ruan ❤️</div>
   <footer>
     Feito com amor por Ruan para Isabelle ❤️
   </footer>
-  
-<script>
-  // Data de início: 2 de outubro de 2026.
-  const inicio = new Date(2026, 9, 2, 0, 0, 0);
 
-  function atualizarContador() {
-    const agora = new Date();
-    const diferenca = agora - inicio;
-    const elemento = document.getElementById("contador");
+  <script>
+    // CONTADOR
+    const inicio = new Date(2026, 9, 2, 0, 0, 0);
 
-    if (diferenca < 0) {
-      const falta = Math.ceil(Math.abs(diferenca) / 86400000);
+    function atualizarContador() {
+      const agora = new Date();
+      const diferenca = agora - inicio;
+      const elemento = document.getElementById("contador");
+
+      if (diferenca < 0) {
+        const falta = Math.ceil(Math.abs(diferenca) / 86400000);
+        elemento.textContent =
+          `Nossa história começa em ${falta} dia(s) ❤️`;
+        return;
+      }
+
+      const dias = Math.floor(diferenca / 86400000);
+      const horas = Math.floor((diferenca % 86400000) / 3600000);
+      const minutos = Math.floor((diferenca % 3600000) / 60000);
+      const segundos = Math.floor((diferenca % 60000) / 1000);
+
       elemento.textContent =
-        `Nossa história começa em ${falta} dia(s) ❤️`;
-      return;
+        `${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos ❤️`;
     }
 
-    const dias = Math.floor(diferenca / 86400000);
-    const horas = Math.floor((diferenca % 86400000) / 3600000);
-    const minutos = Math.floor((diferenca % 3600000) / 60000);
-    const segundos = Math.floor((diferenca % 60000) / 1000);
+    atualizarContador();
+    setInterval(atualizarContador, 1000);
 
-    elemento.textContent =
-      `${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos ❤️`;
-  }
+    // MÚSICA
+    const musica = document.getElementById("musica");
+    const botaoMusica = document.getElementById("botaoMusica");
+    const botaoParar = document.getElementById("botaoParar");
+    const statusMusica = document.getElementById("statusMusica");
 
-  atualizarContador();
-  setInterval(atualizarContador, 1000);
+    let musicaIniciada = false;
 
-  // Música
-  const musica = document.getElementById("musica");
-  const botaoMusica = document.getElementById("botaoMusica");
-  const statusMusica = document.getElementById("statusMusica");
+    async function tocarMusica() {
+      statusMusica.textContent = "Tentando iniciar a música...";
 
-  musica.addEventListener("canplay", () => {
-    statusMusica.textContent = "Música carregada! Aperte para tocar ❤️";
-  });
+      try {
+        await musica.play();
+        musicaIniciada = true;
+        botaoMusica.textContent = "🎵 Música tocando";
+        statusMusica.textContent = "Tocando nossa música ❤️";
+      } catch (erro) {
+        console.error("Erro ao tocar a música:", erro);
+        statusMusica.textContent =
+          "Não foi possível iniciar. Verifique o arquivo e tente novamente.";
+      }
+    }
 
-  musica.addEventListener("error", () => {
-    statusMusica.textContent =
-      "Não foi possível carregar o áudio. Verifique o endereço do arquivo.";
-  });
+    function pararMusica() {
+      musica.pause();
+      musica.currentTime = 0;
+      musicaIniciada = false;
+      botaoMusica.textContent = "🎵 Tocar nossa música";
+      statusMusica.textContent = "Música pausada.";
+    }
 
-  musica.addEventListener("playing", () => {
-    botaoMusica.textContent = "🎵 Música tocando";
-    statusMusica.textContent = "Tocando nossa música ❤️";
-  });
+    botaoMusica.addEventListener("click", tocarMusica);
+    botaoParar.addEventListener("click", pararMusica);
 
-  musica.addEventListener("ended", () => {
-    botaoMusica.textContent = "🎵 Tocar nossa música";
-    statusMusica.textContent = "A música terminou ❤️";
-  });
+    // Usa o primeiro toque/clique na página para tentar iniciar o áudio,
+    // como no outro site. O navegador ainda pode exigir interação direta.
+    function iniciarNoPrimeiroToque() {
+      if (!musicaIniciada) {
+        tocarMusica();
+      }
 
-  function tocarMusica() {
-    statusMusica.textContent = "Tentando iniciar a música...";
+      document.removeEventListener("click", iniciarNoPrimeiroToque);
+      document.removeEventListener("touchstart", iniciarNoPrimeiroToque);
+    }
 
-    musica.play().catch((erro) => {
-      statusMusica.textContent =
-        "Não foi possível tocar. Confira se o arquivo abre pelo link direto.";
-      console.error("Erro ao tocar música:", erro);
+    document.addEventListener("click", iniciarNoPrimeiroToque);
+    document.addEventListener("touchstart", iniciarNoPrimeiroToque, {
+      passive: true
     });
-  }
 
-  function pararMusica() {
-    musica.pause();
-    musica.currentTime = 0;
-    botaoMusica.textContent = "🎵 Tocar nossa música";
-    statusMusica.textContent = "Música pausada.";
-  }
+    musica.addEventListener("playing", () => {
+      musicaIniciada = true;
+      botaoMusica.textContent = "🎵 Música tocando";
+      statusMusica.textContent = "Tocando nossa música ❤️";
+    });
 
-  function mostrarSurpresa() {
-    document.getElementById("surpresa").style.display = "block";
-  }
-</script>
+    musica.addEventListener("pause", () => {
+      if (musica.currentTime > 0 && musica.ended === false) {
+        botaoMusica.textContent = "🎵 Tocar nossa música";
+      }
+    });
+
+    musica.addEventListener("error", () => {
+      musicaIniciada = false;
+      statusMusica.textContent =
+        "Erro ao carregar a música. Confira se musicas/te-vivo.mp3 existe no GitHub.";
+    });
+
+    musica.addEventListener("ended", () => {
+      botaoMusica.textContent = "🎵 Tocar nossa música";
+      statusMusica.textContent = "A música terminou ❤️";
+    });
+
+    // SURPRESA
+    function mostrarSurpresa() {
+      document.getElementById("surpresa").style.display = "block";
+    }
+  </script>
 </body>
 </html>
