@@ -14,7 +14,7 @@
 
     body {
       font-family: Georgia, serif;
-      color: #fff;
+      color: white;
       background: linear-gradient(145deg, #170814, #3a1029, #100812);
       text-align: center;
       min-height: 100vh;
@@ -57,8 +57,9 @@
 
     .contador {
       color: #ffb2cb;
-      font-size: 24px;
+      font-size: 20px;
       margin-top: 15px;
+      line-height: 1.8;
     }
 
     .galeria {
@@ -129,13 +130,16 @@
   <section>
     <h2>Nosso tempo juntos 💞</h2>
     <p>Desde o dia 2 de outubro de 2026</p>
-    <div class="contador" id="contador">Carregando nosso contador...</div>
+    <div class="contador" id="contador">
+      Carregando nosso contador...
+    </div>
   </section>
 
   <section>
     <h2>Nossas lembranças 📸</h2>
     <p>Momentos que ficam ainda mais especiais porque são com você.</p>
     <br>
+
     <div class="galeria">
       <img src="fotos/foto-1.jpg" alt="Nossa lembrança 1">
       <img src="fotos/foto-2.jpg" alt="Nossa lembrança 2">
@@ -146,37 +150,40 @@
 
   <section>
     <h2>Uma música para nós 🎵</h2>
-    <p>“Te Vivo” — Luan Santana</p>
-    <p>Essa música é para lembrar o quanto você é especial para mim.</p>
+    <p>Te Vivo — Luan Santana ❤️</p>
+    <p>Uma música especial para nós dois.</p>
 
-    <button onclick="tocarMusica()">🎵 Tocar nossa música</button>
-    <button onclick="pararMusica()">⏸ Parar música</button>
+    <audio id="nossaMusica" src="musicas/te-vivo.mp3" preload="none"></audio>
 
-    <div id="playerMusica" style="margin-top: 20px;"></div>
-    <p style="font-size: 13px; margin-top: 12px;">
-      A música toca pelo YouTube. Se não começar, aperte o botão de reprodução no vídeo.
-    </p>
+    <button id="botaoMusica" onclick="tocarMusica()">
+      🎵 Tocar nossa música
+    </button>
+
+    <button onclick="pararMusica()">
+      ⏸ Parar música
+    </button>
+
+    <p id="statusMusica" style="font-size: 14px; margin-top: 10px;"></p>
   </section>
 
   <section>
     <h2>Uma cartinha para você 💌</h2>
-    <div class="carta">
-      Isabelle, meu amor ❤️
 
-      Quero que você saiba o quanto é importante para mim.
-      Você deixa meus dias mais bonitos e faz momentos simples
-      se transformarem em lembranças especiais.
+    <div class="carta">Isabelle, meu amor ❤️
 
-      Eu não prometo que todos os dias serão perfeitos,
-      mas quero continuar construindo nossa história com você,
-      com carinho, respeito, sinceridade e muito amor.
+Quero que você saiba o quanto é importante para mim.
+Você deixa meus dias mais bonitos e faz momentos simples
+se transformarem em lembranças especiais.
 
-      Obrigado por fazer parte da minha vida.
-      Você é muito especial para mim.
+Eu não prometo que todos os dias serão perfeitos,
+mas quero continuar construindo nossa história com você,
+com carinho, respeito, sinceridade e muito amor.
 
-      Com amor,
-      Ruan ❤️
-    </div>
+Obrigado por fazer parte da minha vida.
+Você é muito especial para mim.
+
+Com amor,
+Ruan ❤️</div>
   </section>
 
   <section class="motivos">
@@ -190,11 +197,15 @@
 
   <section>
     <h2>Uma última coisa... 🎁</h2>
+
     <p id="surpresa" style="display:none; margin-top:15px;">
       Se eu pudesse escolher novamente, ainda escolheria você.
       Obrigado por fazer parte da minha vida, Isabelle. ❤️
     </p>
-    <button onclick="mostrarSurpresa()">💝 Abrir minha surpresa</button>
+
+    <button onclick="mostrarSurpresa()">
+      💝 Abrir minha surpresa
+    </button>
   </section>
 
   <footer>
@@ -202,7 +213,7 @@
   </footer>
 
   <script>
-    // Data de início do relacionamento: 2 de outubro de 2026.
+    // Data de início: 2 de outubro de 2026.
     const inicio = new Date(2026, 9, 2, 0, 0, 0);
 
     function atualizarContador() {
@@ -229,26 +240,41 @@
     atualizarContador();
     setInterval(atualizarContador, 1000);
 
-    function tocarMusica() {
-      const player = document.getElementById("playerMusica");
+    // Música hospedada na pasta musicas do GitHub.
+    const musica = document.getElementById("nossaMusica");
+    const botaoMusica = document.getElementById("botaoMusica");
+    const statusMusica = document.getElementById("statusMusica");
 
-      player.innerHTML = `
-        <iframe
-          width="100%"
-          height="200"
-          src="https://www.youtube-nocookie.com/embed/dWpGsK8Md28?autoplay=1&playsinline=1&rel=0"
-          title="Te Vivo - Luan Santana"
-          style="border:0; border-radius:14px; max-width:560px;"
-          allow="autoplay; encrypted-media; picture-in-picture"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen>
-        </iframe>
-      `;
+    function tocarMusica() {
+      statusMusica.textContent = "Carregando música...";
+
+      musica.play()
+        .then(() => {
+          botaoMusica.textContent = "🎵 Música tocando";
+          statusMusica.textContent = "Tocando nossa música ❤️";
+        })
+        .catch(() => {
+          statusMusica.textContent =
+            "Não consegui tocar. Confira se musicas/te-vivo.mp3 foi enviado corretamente.";
+        });
     }
 
     function pararMusica() {
-      document.getElementById("playerMusica").innerHTML = "";
+      musica.pause();
+      musica.currentTime = 0;
+      botaoMusica.textContent = "🎵 Tocar nossa música";
+      statusMusica.textContent = "Música pausada.";
     }
+
+    musica.addEventListener("ended", () => {
+      botaoMusica.textContent = "🎵 Tocar nossa música";
+      statusMusica.textContent = "A música terminou ❤️";
+    });
+
+    musica.addEventListener("error", () => {
+      statusMusica.textContent =
+        "Arquivo não encontrado. Confira o nome e a pasta da música no GitHub.";
+    });
 
     function mostrarSurpresa() {
       document.getElementById("surpresa").style.display = "block";
