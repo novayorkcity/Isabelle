@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -267,7 +266,7 @@ Ruan ❤️</div>
       } catch (erro) {
         console.error("Erro ao tocar a música:", erro);
         statusMusica.textContent =
-          "Não foi possível iniciar. Verifique o arquivo e tente novamente.";
+          "Não foi possível iniciar. Verifique se o arquivo existe e o caminho está correto.";
       }
     }
 
@@ -282,8 +281,6 @@ Ruan ❤️</div>
     botaoMusica.addEventListener("click", tocarMusica);
     botaoParar.addEventListener("click", pararMusica);
 
-    // Usa o primeiro toque/clique na página para tentar iniciar o áudio,
-    // como no outro site. O navegador ainda pode exigir interação direta.
     function iniciarNoPrimeiroToque() {
       if (!musicaIniciada) {
         tocarMusica();
@@ -310,10 +307,11 @@ Ruan ❤️</div>
       }
     });
 
-    musica.addEventListener("error", () => {
+    musica.addEventListener("error", (e) => {
       musicaIniciada = false;
+      console.error("Erro no elemento audio:", e);
       statusMusica.textContent =
-        "Erro ao carregar a música. Confira se musicas/te-vivo.mp3 existe no GitHub.";
+        "Erro 404: O arquivo 'musicas/te-vivo.mp3' não foi encontrado no servidor.";
     });
 
     musica.addEventListener("ended", () => {
