@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ruan ❤️ Isabelle</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Georgia, serif;
+      color: #fff;
+      background: linear-gradient(145deg, #170814, #3a1029, #100812);
+      text-align: center;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 65px 20px 35px;
+    }
+
+    .heart {
+      color: #ff548b;
+      font-size: 48px;
+      animation: pulsar 1.5s infinite;
+    }
+
+    h1 {
+      font-size: clamp(35px, 8vw, 65px);
+      margin: 15px 0;
+      text-shadow: 0 0 25px #ff4385;
+    }
+
+    h2 {
+      color: #ff9cbe;
+      margin-bottom: 22px;
+    }
+
+    p {
+      line-height: 1.8;
+    }
+
+    section {
+      width: min(900px, 92%);
+      margin: 30px auto;
+      padding: 28px 20px;
+      background: #ffffff0d;
+      border: 1px solid #ff7eaa35;
+      border-radius: 20px;
+      box-shadow: 0 10px 35px #0003;
+    }
+
+    .contador {
+      color: #ffb2cb;
+      font-size: 24px;
+      margin-top: 15px;
+    }
+
+    .galeria {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+    }
+
+    .galeria img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 14px;
+      border: 1px solid #ff7eaa70;
+      transition: transform .3s;
+    }
+
+    .galeria img:hover {
+      transform: scale(1.03);
+    }
+
+    button {
+      background: linear-gradient(120deg, #ff3f7f, #ff78a7);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 15px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 12px 5px;
+    }
+
+    button:hover {
+      filter: brightness(1.12);
+    }
+
+    .carta {
+      text-align: left;
+      white-space: pre-line;
+      line-height: 2;
+    }
+
+    .motivos p {
+      margin: 12px 0;
+    }
+
+    footer {
+      padding: 35px 15px;
+      color: #ffb2cb;
+    }
+
+    @keyframes pulsar {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="heart">❤️</div>
+    <p>Uma história que eu quero viver todos os dias...</p>
+    <h1>Ruan & Isabelle</h1>
+    <p>Você é meu lugar favorito no mundo.</p>
+  </header>
+
+  <section>
+    <h2>Nosso tempo juntos 💞</h2>
+    <p>Desde o dia 2 de outubro de 2026</p>
+    <div class="contador" id="contador">Carregando nosso contador...</div>
+  </section>
+
+  <section>
+    <h2>Nossas lembranças 📸</h2>
+    <p>Momentos que ficam ainda mais especiais porque são com você.</p>
+    <br>
+    <div class="galeria">
+      <img src="fotos/foto-1.jpg" alt="Nossa lembrança 1">
+      <img src="fotos/foto-2.jpg" alt="Nossa lembrança 2">
+      <img src="fotos/foto-3.jpg" alt="Nossa lembrança 3">
+      <img src="fotos/foto-4.jpg" alt="Nossa lembrança 4">
+    </div>
+  </section>
+
+  <section>
+    <h2>Uma música para nós 🎵</h2>
+    <p>“Te Vivo” — Luan Santana</p>
+    <p>Essa música é para lembrar o quanto você é especial para mim.</p>
+
+    <button onclick="tocarMusica()">🎵 Tocar nossa música</button>
+    <button onclick="pararMusica()">⏸ Parar música</button>
+
+    <div id="playerMusica" style="margin-top: 20px;"></div>
+    <p style="font-size: 13px; margin-top: 12px;">
+      A música toca pelo YouTube. Se não começar, aperte o botão de reprodução no vídeo.
+    </p>
+  </section>
+
+  <section>
+    <h2>Uma cartinha para você 💌</h2>
+    <div class="carta">
+      Isabelle, meu amor ❤️
+
+      Quero que você saiba o quanto é importante para mim.
+      Você deixa meus dias mais bonitos e faz momentos simples
+      se transformarem em lembranças especiais.
+
+      Eu não prometo que todos os dias serão perfeitos,
+      mas quero continuar construindo nossa história com você,
+      com carinho, respeito, sinceridade e muito amor.
+
+      Obrigado por fazer parte da minha vida.
+      Você é muito especial para mim.
+
+      Com amor,
+      Ruan ❤️
+    </div>
+  </section>
+
+  <section class="motivos">
+    <h2>Alguns motivos pelos quais eu te amo 💗</h2>
+    <p>❤️ Porque você é especial para mim.</p>
+    <p>❤️ Porque você consegue deixar meus dias melhores.</p>
+    <p>❤️ Porque adoro compartilhar momentos com você.</p>
+    <p>❤️ Porque quero ver você feliz.</p>
+    <p>❤️ Porque quero continuar escrevendo nossa história.</p>
+  </section>
+
+  <section>
+    <h2>Uma última coisa... 🎁</h2>
+    <p id="surpresa" style="display:none; margin-top:15px;">
+      Se eu pudesse escolher novamente, ainda escolheria você.
+      Obrigado por fazer parte da minha vida, Isabelle. ❤️
+    </p>
+    <button onclick="mostrarSurpresa()">💝 Abrir minha surpresa</button>
+  </section>
+
+  <footer>
+    Feito com amor por Ruan para Isabelle ❤️
+  </footer>
+
+  <script>
+    // Data de início do relacionamento: 2 de outubro de 2026.
+    const inicio = new Date(2026, 9, 2, 0, 0, 0);
+
+    function atualizarContador() {
+      const agora = new Date();
+      const diferenca = agora - inicio;
+      const elemento = document.getElementById("contador");
+
+      if (diferenca < 0) {
+        const falta = Math.ceil(Math.abs(diferenca) / 86400000);
+        elemento.textContent =
+          `Nossa história começa em ${falta} dia(s) ❤️`;
+        return;
+      }
+
+      const dias = Math.floor(diferenca / 86400000);
+      const horas = Math.floor((diferenca % 86400000) / 3600000);
+      const minutos = Math.floor((diferenca % 3600000) / 60000);
+      const segundos = Math.floor((diferenca % 60000) / 1000);
+
+      elemento.textContent =
+        `${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos ❤️`;
+    }
+
+    atualizarContador();
+    setInterval(atualizarContador, 1000);
+
+    function tocarMusica() {
+      const player = document.getElementById("playerMusica");
+
+      player.innerHTML = `
+        <iframe
+          width="100%"
+          height="200"
+          src="https://www.youtube-nocookie.com/embed/dWpGsK8Md28?autoplay=1&playsinline=1&rel=0"
+          title="Te Vivo - Luan Santana"
+          style="border:0; border-radius:14px; max-width:560px;"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen>
+        </iframe>
+      `;
+    }
+
+    function pararMusica() {
+      document.getElementById("playerMusica").innerHTML = "";
+    }
+
+    function mostrarSurpresa() {
+      document.getElementById("surpresa").style.display = "block";
+    }
+  </script>
+</body>
+</html>
